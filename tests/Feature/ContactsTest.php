@@ -84,6 +84,23 @@ class ContactsTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function a_contact_can_be_patched()
+    {
+        $this->withoutExceptionHandling();
+
+        $contact = factory(Contact::class)->create();
+
+        $response = $this->patch('/api/contacts/' . $contact->id, $this->data());
+
+        $contact = $contact->fresh();
+
+        $this->assertEquals('Test name', $contact->name);
+        $this->assertEquals('test@email.com', $contact->email);
+        $this->assertEquals('01/01/1990', $contact->birthday->format('m/d/Y'));
+        $this->assertEquals('Company Name', $contact->company);
+    }
+
     private function data()
     {
         return [
