@@ -156,7 +156,7 @@ class ContactsTest extends TestCase
         $contact = factory(Contact::class)->create();
         $anotherUser = factory(User::class)->create();
 
-        $response = $this->patch('/api/contacts/' . $contact->id, array_merge($this->data(), [$anotherUser->api_token]));
+        $response = $this->patch('/api/contacts/' . $contact->id, array_merge($this->data(), ['api_token' => $anotherUser->api_token]));
 
         $response->assertStatus(403);
     }
